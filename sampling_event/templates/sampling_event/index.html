@@ -1,0 +1,11 @@
+
+
+    <h3> Here are all the sampling events</h3>
+    <ul>
+        {% for event in all_sampleEvents %}
+        <li><a href ="/sampling_event/{{event.id}}/">{{event.assayName}}</a></li>
+
+        {% endfor %}
+    </ul>
+
+

@@ -1,0 +1,17 @@
+<h1>Sampling Event Overview</h1>
+
+<h1>{{sampleEvent.assayName}}</h1>
+<h2>{{sampleEvent.date}}</h2>
+
+
+<u1>
+    {% for sam in sampleEvent.sample_set.all %}
+        <li>{{sam}}</li>
+    {% endfor %}
+</u1>
+
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+
