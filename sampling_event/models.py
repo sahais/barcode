@@ -24,7 +24,7 @@ class sampleEvent(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse('sampling_event:detail',kwargs = {'pk':self.pk})
+        return reverse('sampling_event:detail', kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.assayName + '-' + str(self.id)
