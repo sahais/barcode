@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
 """
 class IndexView(generic.ListView):
     template_name = 'sampling_event/index.html'
@@ -30,6 +31,26 @@ def detail(request, sampleEvent_id):
     sampleEven = get_object_or_404(sampleEvent, pk = sampleEvent_id)
     return render(request, 'sampling_event/detail.html', {'sampleEvent': sampleEven,})
 
+
+def delete_sampleEvent(request, event_id):
+    event = sampleEvent.objects.get(pk = event_id)
+    event.delete()
+    return render(request, 'sampling_event/index.html', )
+
+
+
+
+
 class sampleEventCreate(CreateView):
     model = sampleEvent
-    fields = ['date', 'assayName']
+    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment', 'spacecraft']
+
+
+class sampleEventUpdate(UpdateView):
+    model = sampleEvent
+    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment', 'spacecraft']
+
+
+class sampleEventDelete(DeleteView):
+    model = sampleEvent
+    success_url = reverse_lazy('sampling_event: index')

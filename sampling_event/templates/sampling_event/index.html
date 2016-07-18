@@ -9,3 +9,58 @@
     </ul>
 
 
+
+
+ <div class="albums-container container-fluid">
+
+
+     <!-- Albums -->
+     <div class="row">
+         <div class="col-sm-12">
+
+         </div>
+
+             {% for event in all_sampleEvents %}
+                 <div class="col-sm-4 col-lg-2">
+
+                         <a href="{% url 'sampling_event:detail' event.id %}">
+
+                         </a>
+
+
+
+
+                             <!-- View Details -->
+                             <a href="{% url 'sampling_event:detail' event.id %}" class="btn btn-primary btn-sm" role="button"> {{ event.id}} </a>
+
+
+                             <!-- Delete Album -->
+                             <form action="{% url 'sampling_event:sampleEvent-delete' event.id %}" method="post" style="display: inline;">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="event_id" value="{{ event.id }}" />
+                                 <button type="submit" class="btn btn-default btn-sm">
+                                     <span class="glyphicon glyphicon-trash"></span>
+                                 </button>
+                             </form>
+
+
+
+
+                         </div>
+                     </div>
+                 </div>
+                 {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+             {% endfor %}
+
+             <div class="col-sm-12">
+                 <br>
+                 <a href="{% url 'sampling_event:sampleEvent-add' %}">
+                     <button type="button" class="btn btn-success">
+                         <span class="glyphicon glyphicon-plus"></span>&nbsp; Add a Sampling Event
+                     </button>
+                 </a>
+             </div>
+
+     </div>
+     </div>
+
