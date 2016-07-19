@@ -14,13 +14,13 @@ class sampleEvent(models.Model):
     environment = models.CharField(max_length = 100)
     spacecraft = models.CharField(max_length=100)
 
-    wipeNum = models.PositiveIntegerField
-    swabNum = models.PositiveIntegerField
-    airNum = models.PositiveIntegerField
-    #controlNum = models.PositiveIntegerField
-    otherNum = models.PositiveIntegerField
-    mediaControlNum = models.PositiveIntegerField
-    positiveControlNum = models.PositiveIntegerField
+    #wipeNum = models.PositiveIntegerField
+    #swabNum = models.PositiveIntegerField
+    #airNum = models.PositiveIntegerField
+
+    #otherNum = models.PositiveIntegerField
+    #mediaControlNum = models.PositiveIntegerField
+    #positiveControlNum = models.PositiveIntegerField
 
 
     def get_absolute_url(self):
@@ -30,6 +30,7 @@ class sampleEvent(models.Model):
     def __str__(self):
         return self.assayName + '-' + str(self.id)
     #INCLUE PICTURES
+
 
 class sample(models.Model):
     samplingEvent = models.ForeignKey(sampleEvent, on_delete=models.CASCADE)
@@ -55,6 +56,7 @@ class sample(models.Model):
     def __str__(self):
         return str(self.sampleType) + '-' + str(self.id)
 
+
 class plate(models.Model):
     sample = models.ForeignKey(sample, on_delete=models.CASCADE)
 
@@ -69,9 +71,59 @@ class plate(models.Model):
         return str(self.sample) + '-' + str(self.id)
 
 
+class SampleType(models.Model):
+    method = models.CharField(max_length=10)
+    efficiency = models.IntegerField()
+    area = models.IntegerField()
+    volume = models.DecimalField(max_digits=10, decimal_places=4 )
+    platesCreated = models.IntegerField()
+
+    def __str__(self):
+        return str(self.method)
 
 
+class Coge(models.Model):
+    firstName = models.CharField(max_length=20)
+    lastName = models.CharField(max_length=20)
 
+    def __str__(self):
+        return str(self.firstName) + ' ' + str(self.lastName)
+
+
+class Sampler(models.Model):
+    firstName = models.CharField(max_length=20)
+    lastName = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.firstName) + ' ' + str(self.lastName)
+
+
+class Site(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Facility(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Environment(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Spacecraft(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
 
 
 
