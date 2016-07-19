@@ -4,6 +4,7 @@
     <ul>
         {% for event in all_sampleEvents %}
         <li><a href ="/sampling_event/{{event.id}}/">{{event.assayName}}</a></li>
+        <!-- <a href="{% url 'sampling_event:detail' event.id %}"> {{event.assayName}}</a> -->
 
         {% endfor %}
     </ul>
@@ -23,15 +24,13 @@
              {% for event in all_sampleEvents %}
                  <div class="col-sm-4 col-lg-2">
 
-                         <a href="{% url 'sampling_event:detail' event.id %}">
 
-                         </a>
 
 
 
 
                              <!-- View Details -->
-                             <a href="{% url 'sampling_event:detail' event.id %}" class="btn btn-primary btn-sm" role="button"> {{ event.id}} </a>
+                             <a href="{% url 'sampling_event:detail' event.id %}" class="btn btn-primary btn-sm" role="button"> {{ event.assayName}} </a>
 
 
                              <!-- Delete Album -->

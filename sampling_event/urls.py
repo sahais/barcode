@@ -13,8 +13,8 @@ urlpatterns = [
 
     url(r'^sampleEvent/add/$', views.sampleEventCreate.as_view(), name='sampleEvent-add'),
 
-    url(r'^sampleEvent/(?P<sampleEvent_id>[0-9]+)/$', views.sampleEventUpdate.as_view(), name='sampleEvent-update'),
+    url(r'^sampleEvent/(?P<pk>[0-9]+)/$', views.sampleEventUpdate.as_view(), name='sampleEvent-update'),
 
-    url(r'^sampleEvent/(?P<sampleEvent_id>[0-9]+)/delete$', views.sampleEventDelete.as_view(), name='sampleEvent-delete'),
+    url(r'^sampleEvent/(?P<pk>[0-9]+)/delete/$', views.sampleEventDelete.as_view(), name='sampleEvent-delete'),
 
 ]
