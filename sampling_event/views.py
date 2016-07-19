@@ -2,10 +2,15 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from .models import sampleEvent, sample, plate
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+
+from django.contrib.auth import authenticate, login
+from django.views.generic import View
+from .forms import UserForm
+
 """
 class IndexView(generic.ListView):
     template_name = 'sampling_event/index.html'
@@ -45,4 +50,43 @@ class sampleEventUpdate(UpdateView):
 class sampleEventDelete(DeleteView):
     model = sampleEvent
     success_url = reverse_lazy('sampling_event:index')
+
+
+
+
+class UserFormView(View):
+    form_class = UserForm
+    template_name = 'sampling_event/registration_form.html'
+
+    #display blank form
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            user = form.save(commit=False)
+
+            # cleaned/ normalized data
+            username= form.cleaned_data['username']
+            password= form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+
+            #returns User objects if credientials are correct
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+
+                if user.is_active:
+                    login(request,user)
+                    return redirect('sampling_event:index')
+
+        return render(request, self.template_name, {'form': form})
+
+
+
 

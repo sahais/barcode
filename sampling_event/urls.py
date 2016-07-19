@@ -8,6 +8,9 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     #url(r'^$', views.IndexView.as_view(), name='index'),
 
+    url(r'^register/$', views.UserFormView.as_view(), name='register'),
+
+
     #sampling_event/001
     url(r'^(?P<sampleEvent_id>[0-9]+)/$',views.detail, name='detail'),
 
