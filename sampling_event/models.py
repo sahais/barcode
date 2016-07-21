@@ -4,7 +4,16 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
+class Mission(models.Model):
+    missionName = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.missionName)
+
 class sampleEvent(models.Model):
+
+   # mission = models.ForeignKey(Mission, default=1)
+
     date = models.DateField(default=datetime.date.today)
     assayName = models.CharField(max_length = 100)
     coge = models.CharField(max_length = 100)
@@ -53,6 +62,11 @@ class sample(models.Model):
     accountable = models.BooleanField(default = True)
     description = models.CharField(max_length = 400)
 
+    #needs to be changed
+    def get_absolute_url(self):
+    #    return "/sampling_event/{{self.id}}/"
+        return reverse('sampling_event:sample-index', kwargs={'pk': self.id})
+
     def __str__(self):
         return str(self.sampleType) + '-' + str(self.id)
 
@@ -83,6 +97,7 @@ class SampleType(models.Model):
 
 
 class Coge(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=20)
 
@@ -91,6 +106,7 @@ class Coge(models.Model):
 
 
 class Sampler(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=20)
 
@@ -99,6 +115,7 @@ class Sampler(models.Model):
 
 
 class Site(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -106,6 +123,7 @@ class Site(models.Model):
 
 
 class Facility(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -113,6 +131,7 @@ class Facility(models.Model):
 
 
 class Environment(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -120,6 +139,7 @@ class Environment(models.Model):
 
 
 class Spacecraft(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
     name = models.CharField(max_length=100)
 
     def __str__(self):

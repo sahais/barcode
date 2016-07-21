@@ -1,21 +1,24 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.7/webcomponents-lite.min.js"></script>
+<link rel="import" href="jpl-header.html">
 
-
+ <!--
     <h3> Here are all the sampling events</h3>
     <ul>
         {% for event in all_sampleEvents %}
         <li><a href ="/sampling_event/{{event.id}}/">{{event.assayName}}</a></li>
-        <!-- <a href="{% url 'sampling_event:detail' event.id %}"> {{event.assayName}}</a> -->
+        <a href="{% url 'sampling_event:detail' event.id %}"> {{event.assayName}}</a>
 
         {% endfor %}
     </ul>
-
+    -->
 
 
 
  <div class="albums-container container-fluid">
 
 
-     <!-- Albums -->
+     <!-- Sampling Events -->
+     <h3> All Sampling Events</h3>
      <div class="row">
          <div class="col-sm-12">
 
@@ -33,7 +36,7 @@
                              <a href="{% url 'sampling_event:detail' event.id %}" class="btn btn-primary btn-sm" role="button"> {{ event.assayName}} </a>
 
 
-                             <!-- Delete Album -->
+                             <!-- Delete Sampling Events-->
                              <form action="{% url 'sampling_event:sampleEvent-delete' event.id %}" method="post" style="display: inline;">
                                  {% csrf_token %}
                                  <input type="hidden" name="event_id" value="{{ event.id }}" />

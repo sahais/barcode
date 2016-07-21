@@ -54,6 +54,28 @@ class sampleEventDelete(DeleteView):
 
 
 
+
+
+def sampleIndex(request, sample_id):
+    sampleTemp = get_object_or_404(sampleEvent, pk=sample_id)
+    return render(request, 'sampling_event/sample.html', sampleTemp)
+
+
+class sampleCreate(CreateView):
+    model = sample
+    fields = ['samplingEvent', 'sampleType', 'zoneID', 'subCategory', 'group', 'serialNumber', 'accountable', 'description']
+
+
+class sampleUpdate(UpdateView):
+    model = sample
+    fields = ['sampleType', 'zoneID', 'subCategory', 'group', 'serialNumber', 'accountable', 'description']
+
+
+class sampleDelete(DeleteView):
+    model = sample
+    success_url = reverse_lazy('sampling_event:detail')
+
+
 class UserFormView(View):
     form_class = UserForm
     template_name = 'sampling_event/registration_form.html'

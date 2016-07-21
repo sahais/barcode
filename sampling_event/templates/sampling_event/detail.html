@@ -1,13 +1,36 @@
-<h1>Sampling Event Overview</h1>
+<h2>Sampling Event Overview</h2>
 
-<h1>{{sampleEvent.assayName}}</h1>
-<h2>{{sampleEvent.date}}</h2>
+<h2>{{sampleEvent.assayName}}</h2>
+{{sampleEvent.date}} <br>
+
+Coge: {{sampleEvent.coge}}  <br>
+Samplers: {{sampleEvent.samplers}} <br>
+Site: {{sampleEvent.site}} <br>
+Facility: {{sampleEvent.facility}} <br>
+Environment: {{sampleEvent.environment}} <br>
+Spacecraft: {{sampleEvent.spacecraft}} <br>
+
+
+<h4> List of Samples</h4>
 
 
 <u1>
     {% for sam in sampleEvent.sample_set.all %}
         <li>{{sam}}</li>
+
+
     {% endfor %}
+
+     <!-- Update Sampling Event -->
+    <form action="{% url 'sampling_event:sampleEvent-update' sampleEvent.id %}" method="post" style="display: inline;">
+    </form>
+    <form action="{% url 'sampling_event:sampleEvent-update' sampleEvent.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="event_id" value="{{ sampleEvent.id }}"/>
+        <button type="submit" class="btn btn-default btn-success">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp; Update Sampling Event
+        </button>
+    </form>
 </u1>
 
 {% if error_message %}

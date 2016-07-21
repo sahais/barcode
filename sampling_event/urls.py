@@ -12,12 +12,27 @@ urlpatterns = [
 
 
     #sampling_event/001
-    url(r'^(?P<sampleEvent_id>[0-9]+)/$',views.detail, name='detail'),
+    url(r'^(?P<sampleEvent_id>[0-9]+)/$', views.detail, name='detail'),
 
     url(r'^sampleEvent/add/$', views.sampleEventCreate.as_view(), name='sampleEvent-add'),
 
     url(r'^sampleEvent/(?P<pk>[0-9]+)/$', views.sampleEventUpdate.as_view(), name='sampleEvent-update'),
 
     url(r'^sampleEvent/(?P<pk>[0-9]+)/delete/$', views.sampleEventDelete.as_view(), name='sampleEvent-delete'),
+
+
+
+
+
+    # sampling_event/sample/001
+    url(r'^sample/(?P<pk>[0-9]+)/$', views.sample, name='sample-index'),
+
+
+
+    url(r'^sample/add/$', views.sampleCreate.as_view(), name='sample-add'),
+
+    url(r'^sample/(?P<pk>[0-9]+)/$', views.sampleUpdate.as_view(), name='sample-update'),
+
+    url(r'^sample/(?P<pk>[0-9]+)/delete/$', views.sampleDelete.as_view(), name='sample-delete'),
 
 ]
