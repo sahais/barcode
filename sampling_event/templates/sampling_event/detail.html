@@ -16,10 +16,13 @@ Spacecraft: {{sampleEvent.spacecraft}} <br>
 
 <u1>
     {% for sam in sampleEvent.sample_set.all %}
-        <li>{{sam}}</li>
+        <!--<li>{{sam}}</li> -->
+        <a href="{% url 'sampling_event:sample-index' sam.id %}" class="btn btn-primary btn-sm" role="button"> {{ sam}} </a>
 
 
     {% endfor %}
+    <br>
+    <br>
 
      <!-- Update Sampling Event -->
     <form action="{% url 'sampling_event:sampleEvent-update' sampleEvent.id %}" method="post" style="display: inline;">

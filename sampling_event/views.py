@@ -56,19 +56,19 @@ class sampleEventDelete(DeleteView):
 
 
 
-def sampleIndex(request, sample_id):
-    sampleTemp = get_object_or_404(sampleEvent, pk=sample_id)
-    return render(request, 'sampling_event/sample.html', sampleTemp)
+def sampleIndex(request, pk):
+    sampleTemp = get_object_or_404(sample, pk=pk)
+    return render(request, 'sampling_event/sample.html', {'sampleTemp': sampleTemp})
 
 
 class sampleCreate(CreateView):
     model = sample
-    fields = ['samplingEvent', 'sampleType', 'zoneID', 'subCategory', 'group', 'serialNumber', 'accountable', 'description']
+    fields = ['samplingEvent', 'sampleType', 'serialNumber', 'accountable', 'description']
 
 
 class sampleUpdate(UpdateView):
     model = sample
-    fields = ['sampleType', 'zoneID', 'subCategory', 'group', 'serialNumber', 'accountable', 'description']
+    fields = ['sampleType', 'serialNumber', 'accountable', 'description']
 
 
 class sampleDelete(DeleteView):

@@ -24,8 +24,8 @@ urlpatterns = [
 
 
 
-    # sampling_event/sample/001
-    url(r'^sample/(?P<pk>[0-9]+)/$', views.sample, name='sample-index'),
+    # sampling_event/sample/1
+    url(r'^sample/(?P<pk>[0-9]+)/$', views.sampleIndex, name='sample-index'),
 
 
 
