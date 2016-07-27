@@ -1,0 +1,17 @@
+{
+  "name": "mysite",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+   "dependencies": {
+    "jpl-header": "https://github.jpl.nasa.gov/PolymerElements/jpl-header.git"
+  }
+}
