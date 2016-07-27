@@ -1,0 +1,276 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../app-layout/app-header/app-header.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../app-layout/app-scroll-effects/app-scroll-effects.html">
+
+<!-- Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Roboto:500,400,300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+
+
+<!--
+An element providing a solution to no problem in particular.
+Example:
+    <jpl-header></jpl-header>
+@demo
+-->
+
+<dom-module id="jpl-header">
+  <template>
+    <style is="custom-style" include="iron-flex"></style>
+    <style>
+      :host {
+        display: block;
+        font-family: 'Roboto';
+        font-weight: 300;
+        --paper-tooltip: {
+          font-size:14px;
+        }
+      }
+
+      app-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        color: #fff;
+        background-size: 100%;
+        background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ba0c2f),color-stop(100%, #410706));
+        background-image: -moz-linear-gradient(left, #ba0c2f 0%,#410706 100%);
+        background-image: -webkit-linear-gradient(left, #ba0c2f 0%,#410706 100%);
+        background-image: linear-gradient(to right, #ba0c2f 0%,#410706 100%);
+      }
+
+      .logo {
+        width:75px;
+        height:22px;
+      }
+
+      .linksContainer {
+        margin-left:5px;
+      }
+
+      .link {
+        padding: 0 15px;
+        color: #fff;
+        height: inherit;
+        text-decoration: none;
+        font-family: roboto;
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+      .divider {
+        position: relative;
+        height: 12px;
+        border-left: 2px solid #FFF;
+      }
+
+      .login {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        line-height: 14px;
+        font-style: normal;
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+
+      .titleContainer {
+        width:1200px;
+        height: 85px;
+      }
+
+      .title {
+        padding-right: 18px;
+        font-size: 30px;
+        color: #BA0C2F;
+      }
+
+      .title:hover {
+        cursor: pointer;
+      }
+
+      .titleDivider {
+        height: 25px;
+        border-left: 2px solid #BA0C2F;
+      }
+
+      .subtitle {
+        padding-left: 18px;
+        font-size: 30px;
+        color: #76777B;
+      }
+
+      .nav {
+        width:1200px;
+        height:20px;
+        padding: 10px 0;
+        font-size:15px;
+      }
+
+      .navlink {
+        color: #000;
+        text-decoration: none;
+        margin-right: 36px;
+        -moz-transition-duration: 0.2s;
+        -o-transition-duration: 0.2s;
+        -webkit-transition-duration: 0.2s;
+        transition-duration: 0.2s;
+      }
+
+      .navlink:hover {
+        color: #BA0C2F;
+      }
+
+      .subnav {
+        width: 400px;
+        height: 200px;
+        position:relative;
+        top:130px;
+        right:115px;
+        z-index:2000;
+      }
+
+      .main {
+        font-weight: bold;
+        color: #000;
+        text-decoration: none;
+      }
+
+      .sub {
+        padding-left: 10px;
+        color: #000;
+        text-decoration: none;
+      }
+    </style>
+
+    <app-header>
+      <app-toolbar style='height:50px;'>
+        <div class='horizontal layout center flex'>
+          <a href='http://jpl.nasa.gov/'>
+            <img class='logo' src='images/jpl_logo_white.png' />
+          </a>
+          <div class='horizontal layout center linksContainer'>
+            <a href='https://js.jpl.nasa.gov/' target='_blank' class='link'>JPL Space</a>
+            <div class='divider'></div>
+            <a href='http://www.jpl.nasa.gov/' target='_blank' class='link'>JPL</a>
+            <span class='divider'></span>
+            <a href='http://www.caltech.edu/' target='_blank' class='link'>Caltech</a>
+            <span class='divider'></span>
+            <a href='http://www.nasa.gov/' target='_blank' class='link'>NASA</a>
+          </div>
+          <div class='flex'></div>
+          <div>
+            <template is='dom-if' if='[[login]]'>
+              <template is='dom-if' if='[[!isLogin]]'>
+                <paper-button id='login' class='login' on-click='loginAction'>Login</paper-button>
+              </template>
+              <template is='dom-if' if='[[isLogin]]'>
+                <paper-button id='logout' class='login' on-click='loginAction'>Logout</paper-button>
+              </template>
+            </template>
+          </div>
+        </div>
+      </app-toolbar>
+    </app-header>
+
+    <div style='margin-top:50px;'></div>
+
+    <template is='dom-if' if='[[site-title]]'>
+      <div class='horizontal layout center' style='border-bottom: 1px solid #C8C9CA;'>
+        <div class='flex'></div>
+        <div class='horizontal layout center titleContainer'>
+          <div class='title' on-click='navigateHome'>[[site-title]]</div>
+          <template is='dom-if' if='[[subtitle]]'>
+            <div class='titleDivider'></div>
+            <div class='subtitle'>[[subtitle]]</div>
+          </template>
+          <template is='dom-if' if='[[buttons]]'>
+            <div class='flex'></div>
+            <div>
+              <template is='dom-repeat' items='[[buttons]]'>
+                <paper-icon-button id='[[item.icon]]' icon='[[item.icon]]' on-click='buttonEvent' style='margin-right:5px; color: #BA0C2F;'></paper-icon-button>
+                <paper-tooltip for='[[item.icon]]' offset='50'>[[item.tooltip]]</paper-tooltip>
+              </template>
+            </div>
+          </template>
+        </div>
+        <div class='flex'></div>
+      </div>
+    </template>
+
+    <template is='dom-if' if='[[nav]]'>
+      <div class='horizontal layout center'>
+        <div class='flex'></div>
+        <div class='horizontal layout center nav'>
+          <template is='dom-repeat' items='[[nav]]'>
+            <a href='[[item.link]]' class='navlink'>[[item.title]]</a>
+            <template is='dom-if' if='[[item.subnav]]'>
+              <div class='subnav'>
+                <template is='dom-repeat' items='[[item.subnav]]' as='subnav'>
+                  <div class='[[subnav.type]]'>
+                    <a href='[[subnav.link]]' >[[subnav.title]]</a>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </template>
+        </div>
+        <div class='flex'></div>
+      </div>
+      <div style='border-bottom: 1px solid #C8C9CA;'></div>
+    </template>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'jpl-header',
+
+      properties: {
+        login: {
+          type: Boolean,
+          value: false
+        },
+        isLogin: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      navigateHome: function() {
+        page.show('/');
+      },
+
+      loginAction: function() {
+        this.fire("login-status-changed", { login: this.isLogin });
+      },
+
+      buttonEvent: function(e) {
+        this.fire(e.model.item.event);
+      }
+    });
+  })();
+  </script>
+</dom-module>
