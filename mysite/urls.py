@@ -22,6 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^start/', include('start.urls')),
     url(r'^sampling_event/', include('sampling_event.urls')),
-
+    url(r'^chaining/', include('smart_selects.urls')),
 
 ]

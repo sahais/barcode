@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 import datetime
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
+
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import AbstractBaseUser
@@ -23,12 +25,11 @@ class Sampler(models.Model):
 
 
 class Site(models.Model):
-    mission = models.ForeignKey(Mission, default=1)
+    #mission = models.ForeignKey(Mission, default=1)
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.name)
-
 
 
 class SampleType(models.Model):
@@ -40,17 +41,6 @@ class SampleType(models.Model):
 
     def __str__(self):
         return str(self.method)
-
-
-class Coge(models.Model):
-    firstName = models.CharField(max_length=20)
-    lastName = models.CharField(max_length=20)
-
-    def __str__(self):
-        return str(self.firstName) + ' ' + str(self.lastName)
-
-
-
 
 
 #class Facility(models.Model):
@@ -75,32 +65,42 @@ class Spacecraft(models.Model):
         return str(self.name)
 
 
+class Zone(models.Model):
+    mission = models.ForeignKey(Mission, default=1)
+    name = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return str(self.name)
+
+class PooledID(models.Model):
+    mission = models.ForeignKey(Zone, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.name)
 
 
+class Coge(models.Model):
+    firstName = models.CharField(max_length=20)
+    lastName = models.CharField(max_length=20)
 
+    def __str__(self):
+        return str(self.firstName) + ' ' + str(self.lastName)
 
 class sampleEvent(models.Model):
 
     mission = models.ForeignKey(Mission, default=1)
     date = models.DateField(default=datetime.date.today)
     assayName = models.CharField(max_length = 100)
+
     coge = models.CharField(max_length = 100) #eo
     samplers = models.ManyToManyField(Sampler)
-    #samplers = models.CharField(max_length = 300) #make a manytomany field
-    #site = models.CharField(max_length = 100) #ddl (default = JPL)
     site = models.ForeignKey(Site, default=1)
     facility = models.CharField(max_length = 100) #eo
-    environment = models.CharField(max_length = 100) #ddl
-    spacecraft = models.CharField(max_length=100) #ddl
-
-    #wipeNum = models.PositiveIntegerField
-    #swabNum = models.PositiveIntegerField
-    #airNum = models.PositiveIntegerField
-
-    #otherNum = models.PositiveIntegerField
-    #mediaControlNum = models.PositiveIntegerField
-    #positiveControlNum = models.PositiveIntegerField
-
+    environment = models.ForeignKey(Environment)
+    #environment = models.CharField(max_length = 100) #ddl
+    #spacecraft = models.ForeignKey(Spacecraft) #ddl
 
     def get_absolute_url(self):
     #    return "/sampling_event/{{self.id}}/"
@@ -128,14 +128,10 @@ class sample(models.Model):
 """
 
     sampleType = models.ForeignKey(SampleType)
-    #Category=
-    #PooledID=
+    Zone = models.ForeignKey(Zone)
+    PooledID = ChainedForeignKey(PooledID, chained_field="Zone", chained_model_field="Zone")
 
-
-    #zoneID = models.CharField(max_length=100)
-    #subCategory = models.CharField(max_length=100)
-    #group = models.CharField(max_length=100)
-    serialNumber = models.CharField(max_length=100)
+    serialNumber = models.CharField(max_length=100, null=True, blank=True, default=None)
     accountable = models.BooleanField(default = True)
     description = models.CharField(max_length = 400)
 
@@ -149,7 +145,7 @@ class sample(models.Model):
 
 
 class plate(models.Model):
-    sampleID = models.ForeignKey(sample, on_delete=models.CASCADE)
+    sample = models.ForeignKey(sample, on_delete=models.CASCADE)
 
     #barcode = spacecraft - sampling event - sample - plate type - plate number
     #barcode = str(sample.samplingEvent) + str(sample.primary_key)
@@ -161,8 +157,6 @@ class plate(models.Model):
     def __str__(self):
         return str(self.sampleID) + '-' + str(self.id)
 
-    #sampleObject = sample.objects.get(self.sampleID)
-    #eventObject = sampleObject.samplingEvent
 
 
 

@@ -5,8 +5,9 @@ app_name = 'sampling_event'
 
 urlpatterns = [
 
+    url(r'^chaining/', include('smart_selects.urls')),
+
     url(r'^$', views.index, name='index'),
-    #url(r'^$', views.IndexView.as_view(), name='index'),
 
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
 

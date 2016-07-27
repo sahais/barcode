@@ -39,12 +39,12 @@ def detail(request, sampleEvent_id):
 
 class sampleEventCreate(CreateView):
     model = sampleEvent
-    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment', 'spacecraft']
+    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment']
 
 
 class sampleEventUpdate(UpdateView):
     model = sampleEvent
-    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment', 'spacecraft']
+    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment']
 
 
 class sampleEventDelete(DeleteView):
@@ -63,12 +63,12 @@ def sampleIndex(request, pk):
 
 class sampleCreate(CreateView):
     model = sample
-    fields = ['samplingEvent', 'sampleType', 'serialNumber', 'accountable', 'description']
+    fields = ['samplingEvent', 'sampleType', 'accountable', 'Zone', 'PooledID', 'serialNumber', 'description']
 
 
 class sampleUpdate(UpdateView):
     model = sample
-    fields = ['sampleType', 'serialNumber', 'accountable', 'description']
+    fields = ['sampleType', 'sampleType', 'accountable', 'Zone', 'PooledID', 'serialNumber', 'description']
 
 
 class sampleDelete(DeleteView):
