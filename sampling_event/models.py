@@ -3,7 +3,8 @@ import datetime
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import UserManager
 
 
 class Mission(models.Model):
@@ -11,6 +12,15 @@ class Mission(models.Model):
 
     def __str__(self):
         return str(self.missionName)
+
+class JplUser(AbstractBaseUser):
+    missions = models.ManyToManyField(Mission)
+    username = models.CharField(max_length=62, unique=True)
+
+    objects = UserManager()
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = []
+
 
 
 class Sampler(models.Model):
