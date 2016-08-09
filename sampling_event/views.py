@@ -4,12 +4,13 @@ from .models import sampleEvent, sample, plate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, BaseCreateView
 from django.core.urlresolvers import reverse_lazy
 
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
-from .forms import UserForm
+from .forms import UserForm, multiSample
+
 
 """
 class IndexView(generic.ListView):
@@ -39,21 +40,24 @@ def detail(request, sampleEvent_id):
 
 class sampleEventCreate(CreateView):
     model = sampleEvent
-    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment']
+    fields = ['date', 'assayName', 'coge', 'samplers', 'Site', 'facility', 'environment']
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        event = super(BaseCreateView, self).post(request, *args, **kwargs)
+
+
+        return event
 
 
 class sampleEventUpdate(UpdateView):
     model = sampleEvent
-    fields = ['date', 'assayName', 'coge', 'samplers', 'site', 'facility', 'environment']
+    fields = ['date', 'assayName', 'coge', 'samplers', 'Site', 'facility', 'environment']
 
 
 class sampleEventDelete(DeleteView):
     model = sampleEvent
     success_url = reverse_lazy('sampling_event:index')
-
-
-
-
 
 
 def sampleIndex(request, pk):
@@ -74,6 +78,27 @@ class sampleUpdate(UpdateView):
 class sampleDelete(DeleteView):
     model = sample
     success_url = reverse_lazy('sampling_event:detail')
+
+
+
+
+#class multiSampleCreate(View):
+#    form_class = multiSample
+
+"""
+def multi_sample(request, sampleEvent_id):
+    if request.method == "POST":
+        form = multiSample(request.POST)
+        if form.is_valid():
+            #create a multiform sample page form and redirect to it
+    else:
+        form = multiSample()
+
+    return render(request, )
+"""
+
+
+
 
 
 class UserFormView(View):

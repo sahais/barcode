@@ -43,11 +43,12 @@ class SampleType(models.Model):
         return str(self.method)
 
 
-#class Facility(models.Model):
-    #mission = models.ForeignKey(Mission, default=1)
-    #name = models.CharField(max_length=100)
-    #def __str__(self):
-    #    return str(self.name)
+class Facility(models.Model):
+    Site = models.ForeignKey(Site)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+         return str(self.name)
 
 
 class Environment(models.Model):
@@ -72,9 +73,9 @@ class Zone(models.Model):
     def __str__(self):
         return str(self.name)
 
+
 class PooledID(models.Model):
-    mission = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    Zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -96,11 +97,12 @@ class sampleEvent(models.Model):
 
     coge = models.CharField(max_length = 100) #eo
     samplers = models.ManyToManyField(Sampler)
-    site = models.ForeignKey(Site, default=1)
-    facility = models.CharField(max_length = 100) #eo
+    Site = models.ForeignKey(Site)
+    facility = ChainedForeignKey(Facility, chained_field="Site", chained_model_field="Site", null=True, blank=True, default=None)
+    #facility = models.CharField(max_length = 100) #eo
     environment = models.ForeignKey(Environment)
-    #environment = models.CharField(max_length = 100) #ddl
-    #spacecraft = models.ForeignKey(Spacecraft) #ddl
+
+
 
     def get_absolute_url(self):
     #    return "/sampling_event/{{self.id}}/"
@@ -113,27 +115,15 @@ class sampleEvent(models.Model):
 
 class sample(models.Model):
     samplingEvent = models.ForeignKey(sampleEvent, on_delete=models.CASCADE)
-
-    """
-    SAMPLE_CHOICES = (
-        ("a", "air"),
-        ("s", "swab"),
-        ("w", "wipe"),
-        ("o", "other"),
-        ("pc", "positive-control"),
-        ("mc", "media-control"),
-
-    )
-    sampleType = models.CharField(max_length=2, choices=SAMPLE_CHOICES)
-"""
-
     sampleType = models.ForeignKey(SampleType)
-    Zone = models.ForeignKey(Zone)
-    PooledID = ChainedForeignKey(PooledID, chained_field="Zone", chained_model_field="Zone")
+    accountable = models.BooleanField(default=True)
 
+    Zone = models.ForeignKey(Zone, null=True, blank=True, default=None)
+    PooledID = ChainedForeignKey(PooledID, chained_field="Zone", chained_model_field="Zone", null=True, blank=True, default=None)
     serialNumber = models.CharField(max_length=100, null=True, blank=True, default=None)
-    accountable = models.BooleanField(default = True)
-    description = models.CharField(max_length = 400)
+    description = models.CharField(max_length = 400, null=True, blank=True, default=None)
+
+    #plates = models.IntegerField() - sampleType.platescreated
 
     #needs to be changed
     def get_absolute_url(self):
